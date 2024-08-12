@@ -39,7 +39,7 @@ pipeline {
                 echo "Deploy the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
             }
         }
-        Post{
+        post{
             mail to: "lianaperry022@gmail.com",
             subject: "Build Status"
             body: "Build was successful!"
