@@ -23,9 +23,11 @@ pipeline {
             }
             post {
                 always {
+                    emailtext attachLog: true, attachmentsPattern: 'generatedFile.txt',
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
-                        body: "Unit and Integration tests have been completed. Please find the logs attached. ${BUILD_LOG, maxLines, escapeHtml}",
+                        body: "Unit and Integration tests have been completed. Please find the logs attached.",
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
@@ -41,10 +43,11 @@ pipeline {
                 // sh 'dependency-check.sh'
             }
             post {
-                always {
+                    emailtext attachLog: true, attachmentsPattern: 'generatedFile.txt',
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
-                        body: "Security scan has been completed. Please find the logs attached. ${BUILD_LOG, maxLines, escapeHtml}",
+                        body: "Security scan has been completed. Please find the logs attached.",
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
@@ -61,9 +64,11 @@ pipeline {
             }
             post {
                 always {
+                    emailtext attachLog: true, attachmentsPattern: 'generatedFile.txt',
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Integration Test Stage Completed - Status: ${currentBuild.result}",
-                        body: "Integration Tests on Staging have been completed. Please find the logs attached. ${BUILD_LOG, maxLines, escapeHtml}",
+                        body: "Integration Tests on Staging have been completed. Please find the logs attached.",
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
