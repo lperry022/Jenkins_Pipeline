@@ -68,7 +68,6 @@ pipeline{
                         attachmentsPattern: '**/build.log'
                 }
             }
-        }
         post {
         success {
             echo 'Pipeline completed successfully!'
