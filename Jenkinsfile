@@ -27,6 +27,7 @@ pipeline{
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
                 }
+            }
         }
         stage('Code Analysis') {
             steps {
@@ -41,7 +42,7 @@ pipeline{
             }
             post {
                 always {
-                    emailext to: "lianaperry022@gmail.com",
+                    emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
                         body: "Security scan has been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
@@ -61,27 +62,20 @@ pipeline{
             }
             post {
                 always {
-                    emailext to: "lianaperry022@gmail.com",
+                    emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Integration Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Integration Tests on Staging have been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
                 }
             }
         }
-        stage('Deploy to Production') {
-            steps {
-                echo "Deploying the code to the production environment using Ansible"
-                // sh 'ansible-playbook -i production deploy.yml'
-            }
-        }
-    }
-    post {
+        post {
         success {
             echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed!'
         }
+    }   
     }
-}
 }
