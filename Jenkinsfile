@@ -78,8 +78,7 @@ pipeline {
                     sh 'mvn verify -Pstaging'
                 }
             }
-        }
-        post {
+            post {
                 always {
                     // Send email notification with logs attached
                     emailext (
@@ -90,6 +89,7 @@ pipeline {
                     )
                 }
             }
+        }
 
         stage('Deploy to Production') {
             steps {
@@ -98,8 +98,7 @@ pipeline {
                     sh 'ansible-playbook -i inventory/production deploy.yml'
                 }
             }
-        }
-        post {
+             post {
         success {
             // Send a success notification email
             emailext (
@@ -117,5 +116,6 @@ pipeline {
             )
         }
     }
-    }
+}
+}
 }
