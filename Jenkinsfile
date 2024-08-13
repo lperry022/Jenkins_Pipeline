@@ -1,16 +1,12 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'maven:3.8.4-openjdk-11'
-                    args '-v /root/.m2:/root/.m2'
-                }
-            }
-            steps {
-                sh 'mvn clean package'
-            }
-        }
+  agent any
+  stages {
+    stage("Build") {
+      steps {
+        withMaven {
+          sh "mvn clean verify"
+        } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
+      }
     }
+  }
 }
