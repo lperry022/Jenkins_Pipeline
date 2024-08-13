@@ -4,6 +4,7 @@ pipeline {
         DIRECTORY_PATH = '/var/jenkins_home'
         TESTING_ENVIRONMENT = '6.1_Pipeline'
         PRODUCTION_ENVIRONMENT = 'Liana Perry'
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
     }
     stages {
         stage('Build') {
@@ -22,10 +23,10 @@ pipeline {
             }
             post {
                 always {
-                    emailtext to: "lianaperry022@gmail.com",
+                    mail to: "${env.RECIPIENT_EMAIL}",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
-                        attachmentsPattern: '**/build.log'
+                        attachLog: true
                 }
             }
         }
@@ -42,10 +43,10 @@ pipeline {
             }
             post {
                 always {
-                    emailtext to: "lianaperry022@gmail.com",
+                    mail to: "${env.RECIPIENT_EMAIL}",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
                         body: "Security scan has been completed. Please find the logs attached.",
-                        attachmentsPattern: '**/build.log'
+                        attachLog: true
                 }
             }
         }
@@ -62,10 +63,10 @@ pipeline {
             }
             post {
                 always {
-                    emailtext to: "lianaperry022@gmail.com",
+                    mail to: "${env.RECIPIENT_EMAIL}",
                         subject: "Intergration Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Intergration Tests on Staging have been completed. Please find the logs attached.",
-                        attachmentsPattern: '**/build.log'
+                        attachLog: true
                 }
             }
         }
