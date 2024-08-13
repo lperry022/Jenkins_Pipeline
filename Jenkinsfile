@@ -70,7 +70,6 @@ pipeline {
             mail to: 'lianaperry022@gmail.com',
                  subject: "Pipeline status: ${currentBuild.currentResult}",
                  body: "Pipeline ${env.JOB_NAME} build ${env.BUILD_NUMBER} completed with status: ${currentBuild.currentResult}",
-                 attachLog: true
         }
     }
 }
