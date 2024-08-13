@@ -1,18 +1,19 @@
-pipeline{
+pipeline {
     agent any
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         TESTING_ENVIRONMENT = '6.1_Pipeline'
         PRODUCTION_ENVIRONMENT = 'Liana Perry'
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com' // Add this environment variable
     }
-    stages{
-        stage("Build"){
-            steps{
+    stages {
+        stage('Build') {
+            steps {
                 echo "Fetching the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
                 echo "Compiling the code and generating any necessary artifacts using Maven"
-                // sh 'mvn clean package'            
-                }
+                // sh 'mvn clean package'
             }
+        }
         stage('Unit and Integration Tests') {
             steps {
                 echo "Running unit tests using JUnit"
@@ -22,7 +23,7 @@ pipeline{
             }
             post {
                 always {
-                    emailext to: "lianaperry022@gmail.com",
+                    emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
@@ -68,13 +69,14 @@ pipeline{
                         attachmentsPattern: '**/build.log'
                 }
             }
-        post {
+        }
+    }
+    post {
         success {
             echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed!'
         }
-    }   
     }
 }
