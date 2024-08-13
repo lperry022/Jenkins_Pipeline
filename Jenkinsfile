@@ -23,10 +23,10 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${env.RECIPIENT_EMAIL}",
+                    emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
-                        attachLog: true
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
@@ -43,10 +43,10 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${env.RECIPIENT_EMAIL}",
+                    emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
                         body: "Security scan has been completed. Please find the logs attached.",
-                        attachLog: true
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
@@ -63,10 +63,10 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${env.RECIPIENT_EMAIL}",
-                        subject: "Intergration Test Stage Completed - Status: ${currentBuild.result}",
-                        body: "Intergration Tests on Staging have been completed. Please find the logs attached.",
-                        attachLog: true
+                    emailext to: "${env.RECIPIENT_EMAIL}",
+                        subject: "Integration Test Stage Completed - Status: ${currentBuild.result}",
+                        body: "Integration Tests on Staging have been completed. Please find the logs attached.",
+                        attachmentsPattern: '**/build.log'
                 }
             }
         }
