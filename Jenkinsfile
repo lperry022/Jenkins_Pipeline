@@ -40,9 +40,11 @@ pipeline {
             }
         }
         post{
-            mail to: "lianaperry022@gmail.com",
-            subject: "Build Status"
-            body: "Build was successful!"
+            success{
+                mail to: "lianaperry022@gmail.com",
+                subject: "Build Status"
+                body: "Build was successful!"
+            }
         }
     }
 }
