@@ -22,7 +22,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "lianaperry022@gmail.com",
+                    emailtext to: "lianaperry022@gmail.com",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
@@ -42,7 +42,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "lianaperry022@gmail.com",
+                    emailtext to: "lianaperry022@gmail.com",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
                         body: "Security scan has been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
@@ -62,7 +62,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "lianaperry022@gmail.com",
+                    emailtext to: "lianaperry022@gmail.com",
                         subject: "Intergration Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Intergration Tests on Staging have been completed. Please find the logs attached.",
                         attachmentsPattern: '**/build.log'
