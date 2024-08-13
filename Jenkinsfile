@@ -99,9 +99,7 @@ pipeline {
                 }
             }
         }
-    }
-
-    post {
+        post {
         success {
             // Send a success notification email
             emailext (
@@ -118,5 +116,6 @@ pipeline {
                 body: "The build failed. Please check the logs."
             )
         }
+    }
     }
 }
