@@ -4,40 +4,85 @@ pipeline {
         DIRECTORY_PATH = '/var/jenkins_home'
         TESTING_ENVIRONMENT = '5.1_Pipeline'
         PRODUCTION_ENVIRONMENT = 'Liana Perry'
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
     }
     stages {
         stage('Build') {
             steps {
-                echo "Fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
-                echo "Compile the code and generate any necessary artifacts"
+                echo "Fetching the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
+                echo "Compiling the code and generating any necessary artifacts using Maven"
+                // sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo "Running unit tests"
-                echo "Running integration tests"
+                echo "Running unit tests using JUnit"
+                echo "Running integration tests using Selenium"
+                // sh 'mvn test'
+                // sh 'selenium-integration-test.sh'
+            }
+            post {
+                always {
+                    mail to: "${env.RECIPIENT_EMAIL}",
+                        subject: "Test Stage Completed - Status: ${currentBuild.result}",
+                        body: "Unit and Integration tests have been completed. Please find the logs attached.",
+                        attachLog: true
+                }
             }
         }
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                echo "Check the quality of the code"
+                echo "Analyzing code quality using SonarQube"
+                // sh 'sonar-scanner'
             }
         }
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                echo "Deploy the application to the testing environment specified by the environment variable: ${env.TESTING_ENVIRONMENT}"
+                echo "Scanning for security vulnerabilities using OWASP Dependency-Check"
+                // sh 'dependency-check.sh'
+            }
+            post {
+                always {
+                    mail to: "${env.RECIPIENT_EMAIL}",
+                        subject: "Security Scan Completed - Status: ${currentBuild.result}",
+                        body: "Security scan has been completed. Please find the logs attached.",
+                        attachLog: true
+                }
             }
         }
-        stage('Approval') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Awaiting manual approval..."
-                sleep 10
+                echo "Deploying the application to the staging environment using Ansible"
+                // sh 'ansible-playbook -i staging deploy.yml'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo "Running integration tests in the staging environment using Selenium"
+                // sh 'selenium-staging-integration-test.sh'
+            }
+            post {
+                always {
+                    mail to: "${env.RECIPIENT_EMAIL}",
+                        subject: "Intergration Test Stage Completed - Status: ${currentBuild.result}",
+                        body: "Intergration Tests on Staging have been completed. Please find the logs attached.",
+                        attachLog: true
+                }
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo "Deploy the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
+                echo "Deploying the code to the production environment using Ansible"
+                // sh 'ansible-playbook -i production deploy.yml'
             }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
