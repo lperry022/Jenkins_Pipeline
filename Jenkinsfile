@@ -1,10 +1,15 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+                script {
+                    echo 'Stage 1: Build - Compiling and packaging the code using Maven'
+                    echo 'Tool used: Maven'
+                }
             }
         }
+        // Additional stages will be added here
     }
 }
