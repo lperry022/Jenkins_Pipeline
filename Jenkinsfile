@@ -22,9 +22,11 @@ pipeline{
             }
             post {
                 always {
-                    mail to: "lianaperry022@gmail.com",
+                    emailext to: "lianaperry022@gmail.com",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
-                        body: "Unit and Integration tests have been completed. Please find the logs attached."                }
+                        body: "Unit and Integration tests have been completed. Please find the logs attached.",
+                        attachmentsPattern: '**/build.log'
+                }
             }
         }
     }
