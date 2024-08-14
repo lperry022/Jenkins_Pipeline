@@ -4,7 +4,7 @@ pipeline {
         DIRECTORY_PATH = '/var/jenkins_home'
         TESTING_ENVIRONMENT = '6.1_Pipeline'
         PRODUCTION_ENVIRONMENT = 'Liana Perry'
-        RECIPIENT_EMAIL = 's224299388@deakin.edu.au' 
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com' 
     }
     stages {
         stage('Build') {
