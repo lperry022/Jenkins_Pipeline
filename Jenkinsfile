@@ -4,7 +4,7 @@ pipeline {
         DIRECTORY_PATH = '/var/jenkins_home'
         TESTING_ENVIRONMENT = '6.1_Pipeline'
         PRODUCTION_ENVIRONMENT = 'Liana Perry'
-        RECIPIENT_EMAIL = 'lianaperry022@gmail.com' // Add this environment variable
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com' 
     }
     stages {
         stage('Build') {
@@ -46,7 +46,7 @@ pipeline {
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Security Scan Completed - Status: ${currentBuild.result}",
                         body: "Security scan has been completed. Please find the logs attached.",
-                        attachmentsPattern: '**/build.log'
+                        attachLog: true
                 }
             }
         }
@@ -66,7 +66,7 @@ pipeline {
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Integration Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Integration Tests on Staging have been completed. Please find the logs attached.",
-                        attachmentsPattern: '**/build.log'
+                        attachLog: true
                 }
             }
         }
