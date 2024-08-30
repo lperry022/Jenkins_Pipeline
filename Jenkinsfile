@@ -25,7 +25,7 @@ pipeline {
                 // sh 'selenium-integration-test.sh' // A shell script to run Selenium-based integration tests.
             }
             post {
-    xq            always {
+                always {
                     emailext to: "${env.RECIPIENT_EMAIL}",
                         subject: "Test Stage Completed - Status: ${currentBuild.result}",
                         body: "Unit and Integration tests have been completed. Please find the logs attached.",
